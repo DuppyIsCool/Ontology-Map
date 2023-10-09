@@ -13,7 +13,6 @@ public class VRNetworkPlayerScript : NetworkBehaviour
     public GameObject lHandModel;
 
     public VRPlayerRig vrPlayerRig;
-    public VRNetworkHealth vrNetworkHealth;
     
 
     public override void OnStartLocalPlayer()
