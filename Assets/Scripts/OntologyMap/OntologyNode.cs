@@ -5,6 +5,7 @@ public class OntologyNode : MonoBehaviour
 {
     [SerializeField] private TextMeshPro labelField;
     [SerializeField] private LineRenderer lineRenderer;
+
     public void InitializeNode(string label, Transform parentTransform, Color lineColor)
     {
         labelField.text = label;
@@ -15,12 +16,13 @@ public class OntologyNode : MonoBehaviour
             lineRenderer.SetPosition(0, transform.position);
             lineRenderer.SetPosition(1, parentTransform.position);
 
-            // Set the color of the LineRenderer
-            lineRenderer.startColor = lineColor;
-            lineRenderer.endColor = lineColor;
+            // Correctly setting the color of the child object’s material
+            if (transform.GetChild(0).GetComponent<Renderer>() != null)
+            {
+                transform.GetChild(0).GetComponent<Renderer>().material.color = lineColor;
+            }
 
             lineRenderer.material.color = lineColor;
-            
         }
         else
         {
