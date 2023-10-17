@@ -12,20 +12,17 @@ public class MapLoader : MonoBehaviour
     [SerializeField] private GameObject ontologyNodePrefab;
     [SerializeField] private Vector3 origin;  // The origin for the root nodes.
     [SerializeField] private float scale;  // The origin for the root nodes.
+    [SerializeField] private float radius;
+    [SerializeField] private float rootSpacing;
     private Dictionary<Node, GameObject> nodeGameObjects = new Dictionary<Node, GameObject>();
 
-    public List<Node> Roots { get; private set; } = new List<Node>();
+    public Node RootNode { get; private set; }
 
     void Start()
     {
         LoadOntology();
 
-        float rootSpacing = 5.0f;
-        for (int i = 0; i < Roots.Count; i++)
-        {
-            PositionNodes(Roots[i], origin + new Vector3(i * rootSpacing, 0, 0), 5.0f, scale, 0);
-            Debug.Log("EEASesferg");
-        }
+        PositionNodes(RootNode, origin + new Vector3(rootSpacing, 0, 0), radius, scale, 0);
     }
 
     void LoadOntology()
@@ -56,7 +53,16 @@ public class MapLoader : MonoBehaviour
                 }
                 else if (string.IsNullOrEmpty(parentId))
                 {
-                    Roots.Add(node);
+                    // If a root node already exists, add the new root as its child.
+                    if (RootNode != null)
+                    {
+                        RootNode.Children.Add(node);
+                        node.Parent = RootNode;
+                    }
+                    else
+                    {
+                        RootNode = node;
+                    }
                 }
             }
         }
@@ -64,8 +70,10 @@ public class MapLoader : MonoBehaviour
 
     void PositionNodes(Node node, Vector3 position, float radius, float scale, int level)
     {
-        GameObject newNodeObject = Instantiate(ontologyNodePrefab, position, Quaternion.identity);
+        // Instantiating the new object as a child of this GameObject’s transform
+        GameObject newNodeObject = Instantiate(ontologyNodePrefab, position, Quaternion.identity, this.transform);
         newNodeObject.transform.localScale = Vector3.one * scale;
+
         OntologyNode newNodeComponent = newNodeObject.GetComponent<OntologyNode>();
         newNodeComponent.InitializeNode(node.Label, node.Parent != null ? nodeGameObjects[node.Parent].transform : null, GetColorForLevel(level));
         nodeGameObjects[node] = newNodeObject;
@@ -90,10 +98,23 @@ public class MapLoader : MonoBehaviour
             case 1: return Color.blue;
             case 2: return Color.green;
             case 3: return Color.yellow;
-            // Add more colors/levels if needed
-            default: return Color.white; // Default color if level is not explicitly handled
+            case 4: return Color.cyan;
+            case 5: return Color.magenta;
+            case 6: return Color.grey;
+            case 7: return Color.white;
+            case 8: return new Color(1, 0.5f, 0); // Orange
+            case 9: return new Color(0.5f, 0, 0.5f); // Purple
+            case 10: return new Color(0.5f, 0.5f, 0); // Olive
+            case 11: return new Color(0, 0.5f, 0.5f); // Teal
+            case 12: return new Color(0.5f, 0.5f, 0.5f); // Dark Grey
+            case 13: return new Color(0.5f, 0, 0); // Maroon
+            case 14: return new Color(0, 0.5f, 0); // Dark Green
+            case 15: return new Color(0, 0, 0.5f); // Navy
+                                                   // Add more colors/levels if needed
+            default: return Color.black; // Default color if level is not explicitly handled
         }
     }
+
 
 }
 
