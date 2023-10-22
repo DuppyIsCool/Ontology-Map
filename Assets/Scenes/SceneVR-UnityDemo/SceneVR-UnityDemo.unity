@@ -225,7 +225,7 @@ PrefabInstance:
       objectReference: {fileID: 1137851556}
     - target: {fileID: -291422643447462409, guid: d3f7cb26fb8614984bff2f8d34044e00, type: 3}
       propertyPath: serverBroadcastListenPort
-      value: 7777
+      value: 47777
       objectReference: {fileID: 0}
     - target: {fileID: 1815383773422179063, guid: d3f7cb26fb8614984bff2f8d34044e00, type: 3}
       propertyPath: vrCanvasHUD
