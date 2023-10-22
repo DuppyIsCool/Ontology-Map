@@ -2002,7 +2002,7 @@ GameObject:
   - component: {fileID: 419040165425636608}
   - component: {fileID: 419040165425636615}
   - component: {fileID: 419040165425636614}
-  - component: {fileID: 419040165425636609}
+  - component: {fileID: 8389500788881780937}
   m_Layer: 0
   m_Name: Platformbase
   m_TagString: Untagged
@@ -2075,8 +2075,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &419040165425636609
-SphereCollider:
+--- !u!65 &8389500788881780937
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2084,10 +2084,10 @@ SphereCollider:
   m_GameObject: {fileID: 419040165425636611}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.001953125, z: 0}
 --- !u!1 &498405478733041185
 GameObject:
   m_ObjectHideFlags: 0
