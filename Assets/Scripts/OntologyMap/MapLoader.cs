@@ -12,20 +12,21 @@ public class MapLoader : MonoBehaviour
     [SerializeField] private GameObject ontologyNodePrefab;
     [SerializeField] private Vector3 origin;  // The origin for the root nodes.
     [SerializeField] private float scale;  // The origin for the root nodes.
+    [SerializeField] private float layerHeight;
     [SerializeField] private float radius;
-    [SerializeField] private float rootSpacing;
+    [SerializeField] private float radiusPower;
+    [SerializeField] private bool invertTree;
     private Dictionary<Node, GameObject> nodeGameObjects = new Dictionary<Node, GameObject>();
 
-    public Node RootNode { get; private set; }
+    private Node RootNode { get; set; }
 
-    void Start()
+    private void Start()
     {
-        LoadOntology();
-
-        PositionNodes(RootNode, origin + new Vector3(rootSpacing, 0, 0), radius, scale, 0);
+        LoadOntologyFromCSV();
+        LayoutTree(RootNode, origin, 0, layerHeight, radius, radiusPower, invertTree);
     }
 
-    void LoadOntology()
+    private void LoadOntologyFromCSV()
     {
         using (var reader = new StringReader(ontologyCsv.text))
         using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
@@ -53,7 +54,6 @@ public class MapLoader : MonoBehaviour
                 }
                 else if (string.IsNullOrEmpty(parentId))
                 {
-                    // If a root node already exists, add the new root as its child.
                     if (RootNode != null)
                     {
                         RootNode.Children.Add(node);
@@ -68,29 +68,36 @@ public class MapLoader : MonoBehaviour
         }
     }
 
-    void PositionNodes(Node node, Vector3 position, float radius, float scale, int level)
+    private void LayoutTree(Node node, Vector3 position, float level, float layerHeight, float radius, float radiusPower, bool invertTree)
     {
-        // Instantiating the new object as a child of this GameObject’s transform
         GameObject newNodeObject = Instantiate(ontologyNodePrefab, position, Quaternion.identity, this.transform);
         newNodeObject.transform.localScale = Vector3.one * scale;
 
         OntologyNode newNodeComponent = newNodeObject.GetComponent<OntologyNode>();
-        newNodeComponent.InitializeNode(node.Label, node.Parent != null ? nodeGameObjects[node.Parent].transform : null, GetColorForLevel(level));
+        newNodeComponent.InitializeNode(node.Label, node.Parent != null ? nodeGameObjects[node.Parent].transform : null, GetColorForLevel((int)level));
         nodeGameObjects[node] = newNodeObject;
+
+        float childLevel = level + 1;
 
         float angleStep = 360f / Mathf.Max(1, node.Children.Count);  // Avoid division by zero
         float currentAngle = 0;
 
+        if (invertTree)
+        {
+            currentAngle = 180f; // Start from the opposite direction
+        }
+
         foreach (var child in node.Children)
         {
-            float childRadius = radius * (1 + 0.5f * child.Children.Count);  // Dynamic radius based on children count
-            Vector3 childPosition = position + new Vector3(Mathf.Cos(currentAngle * Mathf.Deg2Rad), Mathf.Sin(currentAngle * Mathf.Deg2Rad), 0) * childRadius;
-            PositionNodes(child, childPosition, radius * 0.8f, scale * 0.8f, level + 1);  // Increment level for child nodes
+            float newRadius = radius * Mathf.Pow(child.Children.Count, radiusPower);
+            Vector3 childPosition = position + new Vector3(Mathf.Cos(currentAngle * Mathf.Deg2Rad), Mathf.Sin(currentAngle * Mathf.Deg2Rad), 0) * newRadius;
+
+            LayoutTree(child, childPosition, childLevel, layerHeight, radius, radiusPower, invertTree);
             currentAngle += angleStep;
         }
     }
 
-    Color GetColorForLevel(int level)
+    private Color GetColorForLevel(int level)
     {
         switch (level)
         {
@@ -115,33 +122,30 @@ public class MapLoader : MonoBehaviour
         }
     }
 
-
-}
-
-public class OntologyNodeData
-{
-    [Name("Class ID")]
-    public string ClassID { get; set; }
-
-    [Name("Preferred Label")]
-    public string PreferredLabel { get; set; }
-
-    [Name("Parents")]
-    public string Parents { get; set; }
-}
-
-public class Node
-{
-    public string Id;
-    public string Label;
-    public Node Parent;
-    public List<Node> Children = new List<Node>();
-
-    public Node(string id, string label)
+    public class OntologyNodeData
     {
-        Id = id;
-        Label = label;
+        [Name("Class ID")]
+        public string ClassID { get; set; }
+
+        [Name("Preferred Label")]
+        public string PreferredLabel { get; set; }
+
+        [Name("Parents")]
+        public string Parents { get; set; }
+    }
+
+    public class Node
+    {
+        public string Id;
+        public string Label;
+        public Node Parent;
+        public List<Node> Children = new List<Node>();
+
+        public Node(string id, string label)
+        {
+            Id = id;
+            Label = label;
+        }
     }
 }
-
 
