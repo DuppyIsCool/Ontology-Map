@@ -5,6 +5,8 @@ using CsvHelper;
 using System.Globalization;
 using CsvHelper.Configuration.Attributes;
 using System.Linq;
+using System.Collections;
+using System.Text;
 
 public class MapLoader : MonoBehaviour
 {
@@ -37,7 +39,7 @@ public class MapLoader : MonoBehaviour
 
             foreach (var dataRow in ontologyData)
             {
-                Node node = new Node(dataRow.ClassID, dataRow.PreferredLabel);
+                Node node = new Node(dataRow.ClassID, dataRow.PreferredLabel, dataRow.definition);
                 nodes[dataRow.ClassID] = node;
             }
 
@@ -68,34 +70,107 @@ public class MapLoader : MonoBehaviour
         }
     }
 
-    private void LayoutTree(Node node, Vector3 position, float level, float layerHeight, float radius, float radiusPower, bool invertTree)
+    private void LayoutTree(Node node, Vector3 position, float level, float layerHeight, float radius, float radiusPower, bool invertTree, float parentAngle = 0f)
     {
-        GameObject newNodeObject = Instantiate(ontologyNodePrefab, position, Quaternion.identity, this.transform);
-        newNodeObject.transform.localScale = Vector3.one * scale;
-
-        OntologyNode newNodeComponent = newNodeObject.GetComponent<OntologyNode>();
-        newNodeComponent.InitializeNode(node.Label, node.Parent != null ? nodeGameObjects[node.Parent].transform : null, GetColorForLevel((int)level));
-        nodeGameObjects[node] = newNodeObject;
-
-        float childLevel = level + 1;
-
-        float angleStep = 360f / Mathf.Max(1, node.Children.Count);  // Avoid division by zero
-        float currentAngle = 0;
-
-        if (invertTree)
+        // Prevent duplicate node instantiation
+        GameObject newNodeObject;
+        if (!nodeGameObjects.ContainsKey(node))
         {
-            currentAngle = 180f; // Start from the opposite direction
+            newNodeObject = Instantiate(ontologyNodePrefab, position, Quaternion.identity, this.transform);
+            newNodeObject.transform.localScale = Vector3.one * scale;
+
+            OntologyNode newNodeComponent = newNodeObject.GetComponent<OntologyNode>();
+            newNodeComponent.InitializeNode(node.Label, node.Parent != null ? nodeGameObjects[node.Parent].transform : null, GetColorForLevel((int)level));
+            nodeGameObjects[node] = newNodeObject;
+        }
+        else
+        {
+            Debug.LogWarning($"Node {node.Label} already instantiated, skipping duplicate creation.");
+            newNodeObject = nodeGameObjects[node];
         }
 
-        foreach (var child in node.Children)
-        {
-            float newRadius = radius * Mathf.Pow(child.Children.Count, radiusPower);
-            Vector3 childPosition = position + new Vector3(Mathf.Cos(currentAngle * Mathf.Deg2Rad), Mathf.Sin(currentAngle * Mathf.Deg2Rad), 0) * newRadius;
+        float newZ = invertTree ? (origin.z + layerHeight * level) : (origin.z - layerHeight * level);
 
-            LayoutTree(child, childPosition, childLevel, layerHeight, radius, radiusPower, invertTree);
+        // Normalize the parentAngle
+        float normalizedParentAngle = (parentAngle % 360 + 360) % 360;
+        float arcStart = normalizedParentAngle - 45f;
+        float arcEnd = normalizedParentAngle + 45f;
+        float angleStep;
+        float currentAngle;
+
+        // Determine if the node is the root or a direct child of the root (level 0 or 1)
+        if (level <= 1)
+        {
+            angleStep = 360f / Mathf.Max(1, node.Children.Count);
+            currentAngle = 0;
+        }
+        else
+        {
+            angleStep = (arcEnd - arcStart) / Mathf.Max(1, node.Children.Count - 1);
+            currentAngle = arcStart;
+        }
+
+        // Determine the scale for children based on the number of children using a switch statement
+        float childScale;
+        int numberOfChildren = node.Children.Count;
+        switch (numberOfChildren)
+        {
+            case > 30:
+                childScale = 0.15f * scale;
+                break;
+            case > 15:
+                childScale = 0.3f * scale; // Adjust the scale factor as needed
+                break;
+            case > 8:
+                childScale = 0.5f * scale; // Adjust the scale factor as needed
+                break;
+            default:
+                childScale = scale; // Standard scale
+                break;
+        }
+
+        // Cap the maximum growth of the radius
+        float maxRadius = 2.0f; // Set to the maximum radius you want to allow
+        float scaledRadius = Mathf.Min(radius * Mathf.Pow(node.Children.Count, radiusPower), maxRadius);
+
+        for (int i = 0; i < node.Children.Count; i++)
+        {
+            var child = node.Children[i];
+
+            // Skip the instantiation if this child has already been created
+            if (nodeGameObjects.ContainsKey(child))
+            {
+                Debug.LogWarning($"Duplicate instantiation attempt for child node {child.Label} of parent {node.Label}.");
+                continue;
+            }
+
+            Vector3 direction = Quaternion.Euler(0, 0, currentAngle) * Vector3.right;
+            Vector3 childPosition = position + direction * scaledRadius;
+            childPosition.z = newZ;
+
+            GameObject childNodeObject = Instantiate(ontologyNodePrefab, childPosition, Quaternion.identity, this.transform);
+            childNodeObject.transform.localScale = Vector3.one * childScale;
+
+            OntologyNode childNodeComponent = childNodeObject.GetComponent<OntologyNode>();
+            childNodeComponent.InitializeNode(child.Label, newNodeObject.transform, GetColorForLevel((int)(level + 1)));
+
+            nodeGameObjects[child] = childNodeObject;
+
+            Debug.Log($"Instantiated child node {child.Label} at scale {childScale}.");
+
+            // Recursive call to layout the child's subtree
+            LayoutTree(child, childPosition, level + 1, layerHeight, scaledRadius, radiusPower, invertTree, currentAngle);
+
+            // Increment the angle
             currentAngle += angleStep;
         }
     }
+
+
+
+
+
+
 
     private Color GetColorForLevel(int level)
     {
@@ -132,20 +207,25 @@ public class MapLoader : MonoBehaviour
 
         [Name("Parents")]
         public string Parents { get; set; }
+
+        [Name("definition")]
+        public string definition { get; set; }
     }
 
-    public class Node
-    {
-        public string Id;
-        public string Label;
-        public Node Parent;
-        public List<Node> Children = new List<Node>();
-
-        public Node(string id, string label)
-        {
-            Id = id;
-            Label = label;
-        }
-    }
 }
 
+public class Node
+{
+    public string Id;
+    public string Label;
+    public string Definition;
+    public Node Parent;
+    public List<Node> Children = new List<Node>();
+
+    public Node(string id, string label, string definiton)
+    {
+        Id = id;
+        Label = label;
+        Definition = definiton;
+    }
+}

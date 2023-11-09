@@ -5,7 +5,7 @@ public class OntologyNode : MonoBehaviour
 {
     [SerializeField] private TextMeshPro labelField;
     [SerializeField] private LineRenderer lineRenderer;
-
+    public Node myNode;
     public void InitializeNode(string label, Transform parentTransform, Color lineColor)
     {
         labelField.text = label;
