@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5131444394514833114}
   - component: {fileID: 5131444394514833094}
-  - component: {fileID: 7681680399938232835}
-  - component: {fileID: 6853212418979859290}
-  - component: {fileID: 6928443063238635487}
   - component: {fileID: -109752710607127970}
-  m_Layer: 6
+  - component: {fileID: 1789824773613768914}
+  - component: {fileID: 865536027767751793}
+  - component: {fileID: 3611291186521578444}
+  m_Layer: 0
   m_Name: Ontology Root Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,7 +51,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   labelField: {fileID: 5131444394945129231}
   lineRenderer: {fileID: 5131444394851865941}
---- !u!54 &7681680399938232835
+--- !u!114 &-109752710607127970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5131444394514833093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88c59ae0733622a4b9237e591d7a7a2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grabInteractable: {fileID: 865536027767751793}
+  infoPanel: {fileID: 0}
+  myNode: {fileID: 5131444394514833094}
+--- !u!54 &1789824773613768914
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -65,9 +80,9 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &6853212418979859290
+--- !u!114 &865536027767751793
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -80,18 +95,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
-  m_Colliders:
-  - {fileID: 6928443063238635487}
+  m_Colliders: []
   m_InteractionLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
   m_InteractionLayers:
-    m_Bits: 1
+    m_Bits: 4294967295
   m_DistanceCalculationMode: 1
-  m_SelectMode: 0
+  m_SelectMode: 1
   m_CustomReticle: {fileID: 0}
-  m_AllowGazeInteraction: 0
-  m_AllowGazeSelect: 0
+  m_AllowGazeInteraction: 1
+  m_AllowGazeSelect: 1
   m_OverrideGazeTimeToSelect: 0
   m_GazeTimeToSelect: 0.5
   m_OverrideTimeToAutoDeselectGaze: 0
@@ -120,7 +134,19 @@ MonoBehaviour:
       m_Calls: []
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5131444394514833094}
+        m_TargetAssemblyTypeName: OntologyNode, Assembly-CSharp
+        m_MethodName: UpdateLine
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_Activated:
     m_PersistentCalls:
       m_Calls: []
@@ -165,7 +191,7 @@ MonoBehaviour:
   m_SnapToColliderVolume: 1
   m_ReinitializeDynamicAttachEverySingleGrab: 1
   m_AttachEaseInTime: 0.15
-  m_MovementType: 2
+  m_MovementType: 1
   m_VelocityDamping: 1
   m_VelocityScale: 1
   m_AngularVelocityDamping: 1
@@ -178,7 +204,7 @@ MonoBehaviour:
   m_SmoothRotation: 0
   m_SmoothRotationAmount: 5
   m_TightenRotation: 0.5
-  m_ThrowOnDetach: 0
+  m_ThrowOnDetach: 1
   m_ThrowSmoothingDuration: 0.25
   m_ThrowSmoothingCurve:
     serializedVersion: 2
@@ -203,7 +229,7 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
---- !u!65 &6928443063238635487
+--- !u!65 &3611291186521578444
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -214,26 +240,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.6551467, y: 1, z: 0.12880325}
-  m_Center: {x: 0.0016107112, y: 0, z: 0.003610611}
---- !u!114 &-109752710607127970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5131444394514833093}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88c59ae0733622a4b9237e591d7a7a2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  grabInteractable: {fileID: 6853212418979859290}
-  informationPanel: {fileID: 0}
-  myNode: {fileID: 5131444394514833094}
-  definitionText: {fileID: 0}
-  nameText: {fileID: 0}
-  parentText: {fileID: 0}
+  m_Size: {x: 0.7732574, y: 1, z: 0.23565483}
+  m_Center: {x: -0.0038012713, y: 0, z: 0.019186974}
 --- !u!1 &5131444394851865940
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,7 +252,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5131444394851865942}
   - component: {fileID: 5131444394851865941}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: LineRender
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -385,7 +393,7 @@ GameObject:
   - component: {fileID: 5131444394945129217}
   - component: {fileID: 5131444394945129216}
   - component: {fileID: 5131444394945129231}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -623,7 +631,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 413761d2f950a404eb5d58c52704a9de, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 413761d2f950a404eb5d58c52704a9de, type: 3}
