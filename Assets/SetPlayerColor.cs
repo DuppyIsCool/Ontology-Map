@@ -16,17 +16,26 @@ namespace Mirror.Examples.AdditiveScenes
         // Unity clones the material when GetComponent<Renderer>().material is called
         // Cache it here and destroy it in OnDestroy to prevent a memory leak
         Material headMaterial;
+        Material lhandMaterial;
+        Material rhandMaterial;
         public GameObject head;
-
+        public GameObject lhand;
+        public GameObject rhand;
         void SetColor(Color32 _, Color32 newColor)
         {
             if (headMaterial == null) headMaterial = head.GetComponentInChildren<Renderer>().material;
             headMaterial.color = newColor;
+            if (rhandMaterial == null) rhandMaterial = rhand.GetComponentInChildren<Renderer>().material;
+            rhandMaterial.color = newColor;
+            if (lhandMaterial == null) lhandMaterial = lhand.GetComponentInChildren<Renderer>().material;
+            lhandMaterial.color = newColor;
         }
 
         void OnDestroy()
         {
             Destroy(headMaterial);
+            Destroy(lhandMaterial);
+            Destroy(rhandMaterial);
         }
     }
 }
