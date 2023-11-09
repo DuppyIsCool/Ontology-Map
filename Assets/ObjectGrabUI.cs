@@ -22,10 +22,17 @@ public class ObjectGrabUI : MonoBehaviour
         definitionValText = infoPanel.transform.Find("PanelStart/DefinitionVal").GetComponent<Text>();
 
         // Subscribe to the select entered and exited events
-        grabInteractable.onSelectEntered.AddListener(ShowInformation);
+        grabInteractable.onSelectEntered.AddListener(GrabShowInformation);
     }
 
-    private void ShowInformation(XRBaseInteractor interactor)
+    //Function to show information when grabbed
+    private void GrabShowInformation(XRBaseInteractor interactor)
+    {
+        ShowInformation();
+    }
+
+    //Shows information on the panel, this is called on grab and on hover.
+    public void ShowInformation() 
     {
         // Check if the myNode variable is assigned and the infoPanel is available
         if (myNode != null && infoPanel != null)
@@ -33,10 +40,10 @@ public class ObjectGrabUI : MonoBehaviour
             // Update the UI Text components with information from the myNode variable
             nodeValText.text = myNode.myNode.Label;
             if (myNode.myNode.Parent != null)
-                if(!string.IsNullOrWhiteSpace(myNode.myNode.Parent.Label))
+                if (!string.IsNullOrWhiteSpace(myNode.myNode.Parent.Label))
                     parentValText.text = myNode.myNode.Parent.Label;
-            else
-                parentValText.text = "(No Parent)";
+                else
+                    parentValText.text = "(No Parent)";
             if (!string.IsNullOrWhiteSpace(myNode.myNode.Definition))
                 definitionValText.text = myNode.myNode.Definition;
             else
@@ -50,6 +57,6 @@ public class ObjectGrabUI : MonoBehaviour
     void OnDestroy()
     {
         // Unsubscribe from the events when the script is destroyed
-        grabInteractable.onSelectEntered.RemoveListener(ShowInformation);
+        grabInteractable.onSelectEntered.RemoveListener(GrabShowInformation);
     }
 }
