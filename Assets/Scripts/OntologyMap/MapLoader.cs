@@ -80,7 +80,7 @@ public class MapLoader : MonoBehaviour
             newNodeObject.transform.localScale = Vector3.one * scale;
 
             OntologyNode newNodeComponent = newNodeObject.GetComponent<OntologyNode>();
-            newNodeComponent.InitializeNode(node.Label, node.Parent != null ? nodeGameObjects[node.Parent].transform : null, GetColorForLevel((int)level));
+            newNodeComponent.InitializeNode(node, node.Parent != null ? nodeGameObjects[node.Parent].transform : null, GetColorForLevel((int)level));
             nodeGameObjects[node] = newNodeObject;
         }
         else
@@ -116,13 +116,13 @@ public class MapLoader : MonoBehaviour
         switch (numberOfChildren)
         {
             case > 30:
-                childScale = 0.15f * scale;
+                childScale = 0.40f * scale;
                 break;
             case > 15:
-                childScale = 0.3f * scale; // Adjust the scale factor as needed
+                childScale = 0.6f * scale; // Adjust the scale factor as needed
                 break;
             case > 8:
-                childScale = 0.5f * scale; // Adjust the scale factor as needed
+                childScale = 0.8f * scale; // Adjust the scale factor as needed
                 break;
             default:
                 childScale = scale; // Standard scale
@@ -136,7 +136,7 @@ public class MapLoader : MonoBehaviour
         for (int i = 0; i < node.Children.Count; i++)
         {
             var child = node.Children[i];
-
+            
             // Skip the instantiation if this child has already been created
             if (nodeGameObjects.ContainsKey(child))
             {
@@ -152,7 +152,7 @@ public class MapLoader : MonoBehaviour
             childNodeObject.transform.localScale = Vector3.one * childScale;
 
             OntologyNode childNodeComponent = childNodeObject.GetComponent<OntologyNode>();
-            childNodeComponent.InitializeNode(child.Label, newNodeObject.transform, GetColorForLevel((int)(level + 1)));
+            childNodeComponent.InitializeNode(child, newNodeObject.transform, GetColorForLevel((int)(level + 1)));
 
             nodeGameObjects[child] = childNodeObject;
 

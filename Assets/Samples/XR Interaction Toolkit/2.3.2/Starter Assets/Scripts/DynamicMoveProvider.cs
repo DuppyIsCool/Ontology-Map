@@ -1,5 +1,6 @@
 using Unity.XR.CoreUtils;
 using UnityEngine.Assertions;
+using UnityEngine.InputSystem;
 
 namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
 {
@@ -174,14 +175,14 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
             var leftHandValue = leftHandMoveAction.action?.ReadValue<Vector2>() ?? Vector2.zero;
             var rightHandValue = rightHandMoveAction.action?.ReadValue<Vector2>() ?? Vector2.zero;
 
-            var totalSqrMagnitude = leftHandValue.sqrMagnitude + rightHandValue.sqrMagnitude;
-            var leftHandBlend = 0.5f;
+            var totalSqrMagnitude = leftHandValue.sqrMagnitude + rightHandValue.sqrMagnitude ;
+            var leftHandBlend = 0f;
             if (totalSqrMagnitude > Mathf.Epsilon)
                 leftHandBlend = leftHandValue.sqrMagnitude / totalSqrMagnitude;
 
             var combinedPosition = Vector3.Lerp(m_RightMovementPose.position, m_LeftMovementPose.position, leftHandBlend);
             var combinedRotation = Quaternion.Slerp(m_RightMovementPose.rotation, m_LeftMovementPose.rotation, leftHandBlend);
-            m_CombinedTransform.SetPositionAndRotation(combinedPosition, combinedRotation);
+            m_CombinedTransform.SetPositionAndRotation(m_LeftMovementPose.position, m_LeftMovementPose.rotation);
 
             return base.ComputeDesiredMove(input);
         }
