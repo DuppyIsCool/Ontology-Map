@@ -427,6 +427,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 716051316}
   m_CullTransparentMesh: 1
+--- !u!114 &778045520 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3127728407087826080, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
+  m_PrefabInstance: {fileID: 1731298970}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83e4e6cca11330d4088d729ab4fc9d9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &805166333
 GameObject:
   m_ObjectHideFlags: 0
@@ -1341,6 +1352,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d6d98023af247b419c43f2f874cf2d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnLocation: {x: 0, y: 0, z: 0}
+  resetDistance: 15
 --- !u!1 &1802840296
 GameObject:
   m_ObjectHideFlags: 0
@@ -4302,7 +4315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_InteractionManager: {fileID: 0}
+  m_InteractionManager: {fileID: 778045520}
   m_Colliders: []
   m_InteractionLayerMask:
     serializedVersion: 2
@@ -4600,7 +4613,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_InteractionManager: {fileID: 0}
+  m_InteractionManager: {fileID: 778045520}
   m_Colliders: []
   m_InteractionLayerMask:
     serializedVersion: 2
@@ -4875,6 +4888,7 @@ GameObject:
   - component: {fileID: 1747924175674218126}
   - component: {fileID: 2149994169817643730}
   - component: {fileID: 4113038556342149475}
+  - component: {fileID: 9154793388728529772}
   m_Layer: 13
   m_Name: Scope
   m_TagString: Untagged
@@ -5079,6 +5093,7 @@ GameObject:
   - component: {fileID: 9167598395168781541}
   - component: {fileID: 4266542087891795682}
   - component: {fileID: 6362703027112347990}
+  - component: {fileID: 9167598395168781542}
   m_Layer: 13
   m_Name: Scissors
   m_TagString: Untagged
@@ -5334,7 +5349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_InteractionManager: {fileID: 0}
+  m_InteractionManager: {fileID: 778045520}
   m_Colliders: []
   m_InteractionLayerMask:
     serializedVersion: 2
@@ -5619,6 +5634,20 @@ Transform:
   m_Father: {fileID: 1677471192403309539}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -87.41, z: 0}
+--- !u!114 &9154793388728529772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5284699069406822776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d6d98023af247b419c43f2f874cf2d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnLocation: {x: 0, y: 0, z: 0}
+  resetDistance: 15
 --- !u!65 &9167598395168781541
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5632,3 +5661,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.22949201, y: 0.04509008, z: 0.066016614}
   m_Center: {x: 0.050474733, y: 0.00284487, z: 0.0051029325}
+--- !u!114 &9167598395168781542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5326981027624412935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d6d98023af247b419c43f2f874cf2d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnLocation: {x: 0, y: 0, z: 0}
+  resetDistance: 15
