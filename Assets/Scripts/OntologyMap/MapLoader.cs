@@ -18,7 +18,7 @@ public class MapLoader : MonoBehaviour
     [SerializeField] private float radius;
     [SerializeField] private float radiusPower;
     [SerializeField] private bool invertTree;
-    private Dictionary<Node, GameObject> nodeGameObjects = new Dictionary<Node, GameObject>();
+    public Dictionary<Node, GameObject> nodeGameObjects = new Dictionary<Node, GameObject>();
 
     private Node RootNode { get; set; }
 

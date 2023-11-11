@@ -2,12 +2,9 @@ using UnityEngine;
 
 public class ResetItems : MonoBehaviour
 {
-    public Transform spawnTransform; // Assign this in the Inspector with the spawn object's Transform
+    public Transform spawnPosition; // Assign this in the Inspector with the spawn object's Transform
     public float maxDistance = 10.0f; // Set the maximum allowed distance from the spawn point
     private Rigidbody myRigidbody;
-    private Vector3 initialPosition;
-    private Quaternion initialRotation;
-    private Vector3 initialScale;
 
     // Start is called before the first frame update
     void Start()
@@ -18,14 +15,7 @@ public class ResetItems : MonoBehaviour
             myRigidbody = gameObject.GetComponent<Rigidbody>();
         }
 
-        if (spawnTransform != null)
-        {
-            // Store the initial transform of the spawn object
-            initialPosition = spawnTransform.position;
-            initialRotation = spawnTransform.rotation;
-            initialScale = spawnTransform.localScale;
-        }
-        else
+        if (spawnPosition == null)
         {
             Debug.LogError("Spawn Transform is not set. Please assign it in the inspector.");
         }
@@ -34,8 +24,9 @@ public class ResetItems : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //
         // Check the distance from the spawn point
-        if (spawnTransform != null && Vector3.Distance(transform.position, spawnTransform.position) > maxDistance)
+        if (spawnPosition != null && Vector3.Distance(transform.position, spawnPosition.position) > maxDistance)
         {
             ResetToSpawn();
         }
@@ -44,9 +35,8 @@ public class ResetItems : MonoBehaviour
     // Reset the GameObject's transform to the spawn object's transform
     private void ResetToSpawn()
     {
-        transform.position = initialPosition;
-        transform.rotation = initialRotation;
-        transform.localScale = initialScale;
+        transform.position = spawnPosition.position;
+        transform.rotation = spawnPosition.rotation;
         // Reset velocity, or else the object will keep flying off the platform. 
         if(myRigidbody != null)
             myRigidbody.velocity = Vector3.zero;

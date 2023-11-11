@@ -7,15 +7,17 @@ public class ObjectGrabUI : MonoBehaviour
     public XRGrabInteractable grabInteractable; // Reference to the XRGrabInteractable
     public GameObject infoPanel; // Reference to the InfoPanel which follows the player
     public OntologyNode myNode; // Reference to the OntologyNode script
+    private MapLoader mapLoader;
 
     // References to the Text components within the InfoPanel hierarchy
     private Text nodeValText;
     private Text parentValText;
     private Text definitionValText;
-
+     
     void Awake()
     {
         infoPanel = GameObject.Find("InfoPanel");
+        mapLoader = GameObject.Find("Map").GetComponent<MapLoader>();
         // Find the Text components within the InfoPanel hierarchy
         nodeValText = infoPanel.transform.Find("PanelStart/NodeVal").GetComponent<Text>();
         parentValText = infoPanel.transform.Find("PanelStart/ParentVal").GetComponent<Text>();
