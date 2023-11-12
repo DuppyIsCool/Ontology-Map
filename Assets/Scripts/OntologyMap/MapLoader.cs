@@ -212,6 +212,11 @@ public class MapLoader : MonoBehaviour
         public string definition { get; set; }
     }
 
+    public Dictionary<Node, GameObject> GetNodeGameObjects()
+    {
+        return nodeGameObjects;
+    }
+
 }
 
 public class Node
