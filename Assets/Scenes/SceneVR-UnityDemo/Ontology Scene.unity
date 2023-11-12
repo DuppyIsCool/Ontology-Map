@@ -1195,7 +1195,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 902369517}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.357, y: -0.094363555, z: 0.22297984}
+  m_LocalPosition: {x: 0.432, y: -0.004, z: 0.299}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2716,7 +2716,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!33 &168703197803514205
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2752,7 +2752,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3575135453478000485}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.10858607, y: 0.028636575, z: -0.10502017}
+  m_LocalPosition: {x: 0.432, y: 0.028636575, z: -0.10502017}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3023,10 +3023,10 @@ RectTransform:
   m_Father: {fileID: 2642947763167016722}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 766.66675, y: -20.65}
+  m_SizeDelta: {x: 160, y: 41.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1339585482045619678
 GameObject:
@@ -3346,10 +3346,10 @@ RectTransform:
   m_Father: {fileID: 2642947763167016722}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 153.33334, y: -20.65}
+  m_SizeDelta: {x: 160, y: 41.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1339585482770153052
 GameObject:
@@ -4537,7 +4537,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1677471192117612789}
   - component: {fileID: 1677471192117612791}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5142,7 +5142,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -5291,7 +5291,7 @@ GameObject:
   - component: {fileID: 3575135453478000486}
   - component: {fileID: 4797956415443707814}
   - component: {fileID: 1741663539}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Glue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5309,7 +5309,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -5478,7 +5478,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -5918,7 +5918,7 @@ GameObject:
   - component: {fileID: 9154793388728529773}
   - component: {fileID: 9154793388728529772}
   - component: {fileID: 9154793388728529774}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Scope
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6054,7 +6054,7 @@ GameObject:
   - component: {fileID: 5330113528786035691}
   - component: {fileID: 5304704126188675537}
   - component: {fileID: 5312648678535620865}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Scissors B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6072,7 +6072,7 @@ GameObject:
   - component: {fileID: 5330181690365813845}
   - component: {fileID: 5300824101018234397}
   - component: {fileID: 5312794567587307697}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Scissors A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6092,7 +6092,7 @@ GameObject:
   - component: {fileID: 4266542087891795682}
   - component: {fileID: 6362703027112347990}
   - component: {fileID: 9167598395168781542}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Scissors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6137,7 +6137,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5326981027624412935}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.12458587, y: -0.09436357, z: 0.2229799}
+  m_LocalPosition: {x: 0.446, y: 0.023, z: 0.345}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6320,7 +6320,7 @@ GameObject:
   - component: {fileID: 7089364381348285043}
   - component: {fileID: 9038102154012802226}
   - component: {fileID: 2270861662338449376}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Glue Tube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6525,10 +6525,10 @@ RectTransform:
   m_Father: {fileID: 2642947763167016722}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 460.00003, y: -20.65}
+  m_SizeDelta: {x: 160, y: 41.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!33 &6816342813096939166
 MeshFilter:
@@ -6601,7 +6601,7 @@ GameObject:
   - component: {fileID: 2699724998683245787}
   - component: {fileID: 1326995546342129175}
   - component: {fileID: 4012476680117394731}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Cap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6624,7 +6624,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5284699069406822776}
   m_LocalRotation: {x: -0, y: -0.6909474, z: 0.000000014901161, w: 0.72290504}
-  m_LocalPosition: {x: -0.0295856, y: 0.03363669, z: -0.5830203}
+  m_LocalPosition: {x: 0.424, y: 0.03363669, z: -0.604}
   m_LocalScale: {x: 0.92166007, y: 0.92166, z: 0.92166007}
   m_ConstrainProportionsScale: 0
   m_Children:
