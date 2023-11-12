@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1789824773613768914}
   - component: {fileID: 865536027767751793}
   - component: {fileID: 3611291186521578444}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ontology Root Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_InteractionLayers:
-    m_Bits: 4294967295
+    m_Bits: 2
   m_DistanceCalculationMode: 1
   m_SelectMode: 1
   m_CustomReticle: {fileID: 0}
@@ -253,7 +253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5131444394851865942}
   - component: {fileID: 5131444394851865941}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LineRender
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -394,7 +394,7 @@ GameObject:
   - component: {fileID: 5131444394945129217}
   - component: {fileID: 5131444394945129216}
   - component: {fileID: 5131444394945129231}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -632,7 +632,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 413761d2f950a404eb5d58c52704a9de, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 413761d2f950a404eb5d58c52704a9de, type: 3}
