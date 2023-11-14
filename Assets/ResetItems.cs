@@ -39,6 +39,10 @@ public class ResetItems : MonoBehaviour
         transform.rotation = spawnPosition.rotation;
         // Reset velocity, or else the object will keep flying off the platform. 
         if(myRigidbody != null)
+        {
             myRigidbody.velocity = Vector3.zero;
+            myRigidbody.useGravity = false;
+            myRigidbody.angularVelocity = Vector3.zero;
+        }
     }
 }
