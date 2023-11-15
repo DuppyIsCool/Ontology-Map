@@ -2424,9 +2424,17 @@ PrefabInstance:
       propertyPath: m_EnableFly
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3127728407712097238, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3127728407712097239, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3127728407712097240, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3127728407712097240, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
       propertyPath: m_RightHandSnapTurnAction.m_UseReference
@@ -2700,6 +2708,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7696548424635294051, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
   m_PrefabInstance: {fileID: 2027665273}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2027665292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2027665277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 479193d68290f574d97c0f7014429c01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  referenceObject: {fileID: 1339585482560424137}
+  resetHeight: 1
+  threshold: 10
 --- !u!1 &118693510426420274
 GameObject:
   m_ObjectHideFlags: 0
@@ -3074,7 +3097,7 @@ GameObject:
   - component: {fileID: 1339585482560424142}
   - component: {fileID: 1339585482560424143}
   - component: {fileID: 7145785089563057408}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Platformbase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
