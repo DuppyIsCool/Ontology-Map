@@ -5,6 +5,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class OntologyNode : MonoBehaviour
 {
     [SerializeField] private TextMeshPro labelField;
+    [SerializeField] private TextMeshPro labelField2;
     [SerializeField] private LineRenderer lineRenderer;
     public Node myNode;
     private Transform parentTransform; // Store the parent transform
@@ -13,6 +14,7 @@ public class OntologyNode : MonoBehaviour
     {
         myNode = node;
         labelField.text = node.Label;
+        labelField2.text = node.Label;
         this.parentTransform = parentTransform; // Assign the parent transform to the member variable
 
         if (parentTransform != null)
