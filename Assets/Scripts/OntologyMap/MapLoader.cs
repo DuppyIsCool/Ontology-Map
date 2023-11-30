@@ -5,10 +5,12 @@ using CsvHelper;
 using System.Globalization;
 using CsvHelper.Configuration.Attributes;
 using System.Linq;
-using System.Collections;
-using System.Text;
+using Mirror;
+using System.Runtime.Serialization.Formatters.Binary;
+using System;
+using CsvHelper.Configuration;
 
-public class MapLoader : MonoBehaviour
+public class MapLoader : NetworkBehaviour
 {
     [SerializeField] private TextAsset ontologyCsv;
     [SerializeField] private GameObject ontologyNodePrefab;
@@ -20,18 +22,41 @@ public class MapLoader : MonoBehaviour
     [SerializeField] private bool invertTree;
     public Dictionary<Node, GameObject> nodeGameObjects = new Dictionary<Node, GameObject>();
 
-    private Node RootNode { get; set; }
 
-    private void Start()
+    // This seems to not sync well over the network due to the large size
+    // Perhaps break every node into it's own Network RPC message to contstruct starting from the root and send a message per child for every node?
+    // Mirror should batch the messages and KCP transport protocol garuntees it will be in-order processing.
+    // Next group should do this as their goal.
+    // For how to sync custom data types, see the custom serialization class at the end of this script.
+    [SyncVar]
+    private Node RootNode;
+
+    //The server should read the file
+    public override void OnStartServer()
     {
+        //Loads the CSV data into the RootNode object
         LoadOntologyFromCSV();
+    }
+
+    //Clients layout based on the root node
+    public override void OnStartClient()
+    {
         LayoutTree(RootNode, origin, 0, layerHeight, radius, radiusPower, invertTree);
+        base.OnStartClient();
     }
 
     private void LoadOntologyFromCSV()
     {
+        if (!isServer)
+            return;
+
+        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+        {
+            PrepareHeaderForMatch = args => args.Header.ToLower(),
+        };
+
         using (var reader = new StringReader(ontologyCsv.text))
-        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+        using (var csv = new CsvReader(reader, config))
         {
             var ontologyData = csv.GetRecords<OntologyNodeData>().ToList();
 
@@ -156,8 +181,6 @@ public class MapLoader : MonoBehaviour
 
             nodeGameObjects[child] = childNodeObject;
 
-            Debug.Log($"Instantiated child node {child.Label} at scale {childScale}.");
-
             // Recursive call to layout the child's subtree
             LayoutTree(child, childPosition, level + 1, layerHeight, scaledRadius, radiusPower, invertTree, currentAngle);
 
@@ -165,12 +188,6 @@ public class MapLoader : MonoBehaviour
             currentAngle += angleStep;
         }
     }
-
-
-
-
-
-
 
     private Color GetColorForLevel(int level)
     {
@@ -197,20 +214,22 @@ public class MapLoader : MonoBehaviour
         }
     }
 
+    //We handled this all in lower case per CSV reader
     public class OntologyNodeData
     {
-        [Name("Class ID")]
+        [Name("class id")]
         public string ClassID { get; set; }
 
-        [Name("Preferred Label")]
+        [Name("preferred label")]
         public string PreferredLabel { get; set; }
 
-        [Name("Parents")]
+        [Name("parents")]
         public string Parents { get; set; }
 
-        [Name("definition")]
+        [Name("definitions")]
         public string definition { get; set; }
     }
+
 
     public Dictionary<Node, GameObject> GetNodeGameObjects()
     {
@@ -219,18 +238,61 @@ public class MapLoader : MonoBehaviour
 
 }
 
+[Serializable]
 public class Node
 {
-    public string Id;
-    public string Label;
-    public string Definition;
-    public Node Parent;
-    public List<Node> Children = new List<Node>();
+    public string Id { get; set; }
+    public string Label { get; set; }
+    public string Definition { get; set; }
+    public Node Parent { get; set; }
+    public List<Node> Children { get; set; } = new List<Node>();
 
-    public Node(string id, string label, string definiton)
+    public Node(string id, string label, string definition)
     {
         Id = id;
         Label = label;
-        Definition = definiton;
+        Definition = definition;
+    }
+
+    public Node() { }
+}
+
+public static class CustomNetworkWriterReader
+{
+    public static void WriteNode(this NetworkWriter writer, Node node)
+    {
+        writer.WriteString(node.Id);
+        writer.WriteString(node.Label);
+        writer.WriteString(node.Definition);
+
+        // Serialize children count
+        writer.WriteInt(node.Children.Count);
+
+        // Recursively serialize children
+        foreach (var child in node.Children)
+        {
+            writer.WriteNode(child);
+        }
+    }
+
+    public static Node ReadNode(this NetworkReader reader)
+    {
+        var id = reader.ReadString();
+        var label = reader.ReadString();
+        var definition = reader.ReadString();
+
+        var node = new Node(id, label, definition);
+
+        // Deserialize children
+        int childrenCount = reader.ReadInt();
+        for (int i = 0; i < childrenCount; i++)
+        {
+            var child = reader.ReadNode();
+            child.Parent = node;
+            node.Children.Add(child);
+        }
+
+        return node;
     }
 }
+
